@@ -7,7 +7,8 @@
 rm(list=ls())
 
 # a)
-
+## NOTE: do not assign to built-in object like 'date'. To see what date normally does, run
+?date
 date <- c('03Mon18', '04Tue18', '05Wed18', '06Thu18', '07Fri18', '06Sat18', '07Sun18')
 
 xmin <- c( 23.0, 20.5,  28.2, 20.3, 22.4, 17.2, 18.2)
@@ -22,6 +23,7 @@ diference <- xmax - xmin
 diference
 
 # c)
+## NOTE: use the mean function. No need to be verbose here.
 
 avgMax <- sum(xmax)/length(xmax)
 avgMax
@@ -34,8 +36,11 @@ avgMin
 xmin[xmin <= avgMin ]
 
 # e)
-
+## Incorrect subsetting
 xmin[xmin >= avgMin ]
+
+## Correct
+xmin[xmax > avgMax]
 
 # f)
 
@@ -91,6 +96,21 @@ temperaturesFahrenheit_2 <- data.frame(
 )
 
 temperaturesFahrenheit_2
+
+## Easier way to do the above
+
+temperatures <- within(temperatures, {
+  xminFahrenheit <- xmin * (9/5) + 32
+  xmaxFahrenheit <- xmax * (9/5) + 32
+})
+
+temperaturesFahrenheit <- temeratures[, c('xminFahrenheit', 'xmaxFahrenheit)]
+
+## Easier to subset the whole data.frame instead of 
+## doing this for each vector used in its construction
+
+temperaturesFahrenheit[1:5, ]
+temperaturesFahrenheit[-(6:7), ]
 
 
 
